@@ -80,35 +80,3 @@
     return HasValue ? $"Optional[{_value}]" : "Optional.Empty";
   }
 }
-
-class Context
-{
-  public void init()
-  {
-    Optional<string> optionalWithValue = Optional<string>.Of("Hello, World!");
-    Optional<string> emptyOptional = Optional<string>.Empty();
-
-    // Map transforma o valor se presente
-    Optional<int> lengthOptional = optionalWithValue.Map(value => value.Length);
-    Console.WriteLine(lengthOptional.OrElse(0)); // Imprime: 13
-
-    // FlatMap aplica uma função que retorna outro Optional
-    Optional<int> flatMapped = optionalWithValue.FlatMap(value =>
-    {
-      if (value.Length > 5)
-        return Optional<int>.Of(value.Length);
-      else
-        return Optional<int>.Empty();
-    });
-
-    Console.WriteLine(flatMapped.OrElse(0)); // Imprime: 13
-
-    Optional<int> flatMappedEmpty = emptyOptional.FlatMap(value =>
-    {
-      return Optional<int>.Of(value.Length);
-    });
-
-    Console.WriteLine(flatMappedEmpty.OrElse(0)); // Imprime: 0
-
-  }
-}
